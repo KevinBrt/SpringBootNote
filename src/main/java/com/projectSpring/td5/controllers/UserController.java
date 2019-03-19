@@ -28,14 +28,22 @@ public class UserController {
 	
 	@RequestMapping("connexion")
 	public String connect(Model model, HttpSession session) {
-		if(session.getAttribute("user") == null) {
+		
+		if(isConnected(session) == false) {
 			model.addAttribute("user", new User());
 			return "user/connect";
-			
 		}else {
 			return "user/index";
 		}
 		
+	}
+	
+	public boolean isConnected(HttpSession session) {
+		if( session.getAttribute("user") == null) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 	
 	
@@ -73,8 +81,14 @@ public class UserController {
 	
 	@RequestMapping("/index")
 	public String index(ModelMap model, HttpSession session) {
-		model.addAttribute("user", session.getAttribute("user"));
-		return "user/index";
+		if(isConnected(session)) {
+			model.addAttribute("user", session.getAttribute("user"));
+			return "user/index";
+		}else {
+			model.addAttribute("user", new User());
+			return "user/connect";
+		}
+		
 	}
 	
 	@RequestMapping("/logout")
