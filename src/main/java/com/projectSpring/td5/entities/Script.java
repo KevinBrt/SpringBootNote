@@ -26,8 +26,8 @@ public class Script {
 	@ManyToOne
 	private User user;
 	
-	@ManyToOne
-	private History history;
+	@OneToMany
+	private List<History> history;
 	
 	@ManyToOne
 	private Categorie categorie;
@@ -83,5 +83,24 @@ public class Script {
 	public void setLanguage(Language language) {
 		this.language = language;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+	
+	
 	
 }

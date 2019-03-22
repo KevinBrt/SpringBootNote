@@ -1,0 +1,37 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+<div style="width: 50%; margin-left: auto; margin-right: auto; margin-top: 50px;
+background: #FAFAFA; padding: 10px 10px; border: 1px solid black;">
+	<form modelAttribute="script" class="ui form" method="post">
+	  <div class="field">
+	    <label>Title</label>
+	    <input type="text" path="title" name="title" placeholder="Title" required>
+	  </div>
+	  <div class="field">
+	    <label>Description</label>
+	    <input path="description" name="description" placeholder="Description" required>
+	  </div>
+	   <div class="field">
+	    <label>Content</label>
+	    <textarea path="content" name="content" required></textarea>
+	  </div>
+	  <select name="language_id" path="language_id" class="ui dropdown" required>
+	 	  <option value="">Choose a language</option>
+		  {{#languages}}
+		  <option value="{{id}}">{{name}}</option>
+		  {{/languages}}
+	  </select>
+	  
+	  <br/>
+	  
+	  <select name="categorie_id" path="categorie_id" class="ui dropdown" required>
+	 	  <option value="">Choose a categorie</option>
+		  {{#categories}}
+		  <option value="{{id}}">{{name}}</option>
+		  {{/categories}}
+	  </select>
+	  
+	  <br/>
+	  
+	  <button class="ui button" type="submit">Create new script</button>
+	</form>
+</div>

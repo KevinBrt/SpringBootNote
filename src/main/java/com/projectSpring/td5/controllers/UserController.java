@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.projectSpring.td5.entities.Script;
 import com.projectSpring.td5.entities.User;
+import com.projectSpring.td5.repositories.ScriptsRepository;
 import com.projectSpring.td5.repositories.UsersRepository;
 
 
@@ -25,6 +27,10 @@ public class UserController {
 	
 	@Autowired
 	private UsersRepository usersRepo;
+	
+	@Autowired
+	private ScriptsRepository scriptsRepo;
+	
 	
 	@RequestMapping("connexion")
 	public String connect(Model model, HttpSession session) {
@@ -81,13 +87,14 @@ public class UserController {
 	
 	@RequestMapping("/index")
 	public String index(ModelMap model, HttpSession session) {
-		if(isConnected(session)) {
+			
+			List<Script> scripts = scriptsRepo.findAll();
+			
+			model.addAttribute("scripts", scripts);
+			
+			
 			model.addAttribute("user", session.getAttribute("user"));
 			return "user/index";
-		}else {
-			model.addAttribute("user", new User());
-			return "user/connect";
-		}
 		
 	}
 	

@@ -1,0 +1,32 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+<div class="ui placeholder segment" style="width: 90%; margin-left: auto; margin-right: auto; margin-top: 3px;">
+
+	<h1>Script : {{script.title}}</h1>
+	
+	<div>
+	
+	<p><b>Description :</b> {{script.description}}</p>
+	<p><b>Categorie :</b> {{script.categorie.name}}</p>
+	<p><b>Language :</b> {{script.language.name}}</p>
+	
+	</div>
+ 
+</div>
+
+<div style="width: 90%; margin-left: auto; margin-right:auto;">
+<form  modelAttribute="script"  method="post" action="saveChanges">
+
+<input hidden value="{{script.id}}">
+	  
+	    <textarea  style="resize: none; height: 600px; width: 100%;" path="content" name="content">{{script.content}}</textarea>
+	  <br/>
+	  <div style="height: 60px; background: #ecf0f1; padding-top: 15px; padding-left: 10px; padding-right: 10px;">
+	  	<a href="/users/index"><button class="ui orange button" type="button">Cancel</button></a>
+	  	<button style="float: right;" class="ui green button" type="submit">Save changes</button>
+	  </div>
+	  
+	  
+	</form>
+</div>
+	
+ 
