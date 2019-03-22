@@ -152,12 +152,13 @@ public class ScriptController {
 		
 		
 		
-		System.out.println("DANS LE POST SAVE : " + script.getContent());
+		System.out.println("DANS LE POST SAVE : " + script.getId());
 		
 		
 		Optional<Script> s = scriptsRepo.findById(script.getId());
 		
 		if(s.isPresent()) {
+			System.out.println("est present");
 			Script script2 = s.get();
 			
 			script2.setContent(script.getContent());

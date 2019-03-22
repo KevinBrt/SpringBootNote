@@ -61,6 +61,7 @@ public class UserController {
 		if(user != null) {
 			System.out.println("ACCESS AUTORISE");
 			session.setAttribute("user", user);
+			session.setMaxInactiveInterval(-1);
 			return new RedirectView("/users/index");
 		}else {
 			System.out.println("ACCESS NON AUTORISE");

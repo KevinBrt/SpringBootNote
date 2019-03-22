@@ -16,7 +16,7 @@
 <div style="width: 90%; margin-left: auto; margin-right:auto;">
 <form  modelAttribute="script"  method="post" action="saveChanges">
 
-<input hidden value="{{script.id}}">
+<input path="id" name="id" hidden value="{{script.id}}">
 	  
 	    <textarea  style="resize: none; height: 600px; width: 100%;" path="content" name="content">{{script.content}}</textarea>
 	  <br/>
