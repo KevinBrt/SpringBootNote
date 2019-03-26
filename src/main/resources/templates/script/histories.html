@@ -1,0 +1,37 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+<div style="width: 100%; background: #FAFAFA; height: 60px; box-shadow: 0 4px 2px -2px gray;">
+	<h1 style="position: relative; top: 10px; left: 10px;">You are connected</h1>
+	<a href="/users/logout" style="float: right; position: relative; top: -37px; right: 15px;">
+		<button class="ui red button">
+		  Log out
+		</button>
+	</a>
+	
+</div>
+
+<div>
+	
+	<div class="ui placeholder segment" style="width: 90%; margin-left: auto; margin-right: auto; margin-top: 60px;">
+	<h1>Histories</h1>
+  	<table class="ui celled table">
+	  <thead>
+	    <tr><th>Date</th>
+	    <th>Comment</th>
+	    <th>Action</th>
+	  </tr></thead>
+	  <tbody>
+	  {{#histories}}
+	  
+	  <tr>
+	      <td data-label="Date">{{date}}</td>
+	      <td data-label="Comment">{{comment}}</td>
+	       <td data-label="action">  <a href="/users/script/history/open/{{id}}">Open</a></td>
+	    </tr>
+	  
+	  {{/histories}}
+	    
+	  </tbody>
+	</table>
+ 
+	</div>
+</div>

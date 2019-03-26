@@ -1,5 +1,6 @@
 package com.projectSpring.td5.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -33,6 +34,7 @@ public class Script {
 	private Categorie categorie;
 	
 	public Script() {
+		this.history = new ArrayList<History>();
 		
 	}
 
@@ -99,6 +101,10 @@ public class Script {
 
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
+	}
+	
+	public void addHistory(History h){
+		history.add(h);
 	}
 	
 	

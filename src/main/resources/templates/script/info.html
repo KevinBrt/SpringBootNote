@@ -10,7 +10,8 @@
 	<p><b>Language :</b> {{script.language.name}}</p>
 	
 	</div>
- 
+	
+	<a href="/users/script/histories/{{script.id}}"><button>Show Histories</button></a> 
 </div>
 
 <div style="width: 90%; margin-left: auto; margin-right:auto;">
@@ -22,7 +23,11 @@
 	  <br/>
 	  <div style="height: 60px; background: #ecf0f1; padding-top: 15px; padding-left: 10px; padding-right: 10px;">
 	  	<a href="/users/index"><button class="ui orange button" type="button">Cancel</button></a>
+	  	
 	  	<button style="float: right;" class="ui green button" type="submit">Save changes</button>
+	  	
+	  	<input style="float: right; position: relative; right: 10px; top: 5px; height: 30px; width: 400px; border-radius: 3px;" type="text"  
+	  	id="comment" name="comment" path="comment" placeholder="Enter a comment before saving">
 	  </div>
 	  
 	  

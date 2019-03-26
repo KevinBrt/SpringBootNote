@@ -3,6 +3,7 @@ package com.projectSpring.td5.controllers;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -21,10 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.projectSpring.td5.entities.Categorie;
+import com.projectSpring.td5.entities.History;
 import com.projectSpring.td5.entities.Language;
 import com.projectSpring.td5.entities.Script;
 import com.projectSpring.td5.entities.User;
 import com.projectSpring.td5.repositories.CategoriesRepository;
+import com.projectSpring.td5.repositories.HistoriesRepository;
 import com.projectSpring.td5.repositories.LanguagesRepository;
 import com.projectSpring.td5.repositories.ScriptsRepository;
 import com.projectSpring.td5.repositories.UsersRepository;
@@ -41,6 +44,9 @@ public class ScriptController {
 	
 	@Autowired
 	private CategoriesRepository categoriesRepo;
+	
+	@Autowired
+	private HistoriesRepository historiesRepo;
 	
 	@RequestMapping("createe")
 	@ResponseBody
@@ -92,6 +98,9 @@ public class ScriptController {
 		script.setCategorie(categoriesRepo.findById(categorie_id));
 		script.setLanguage(languagesRepo.findById(language_id));
 		
+		
+		
+		
 		User u = (User) session.getAttribute("user");
 		
 		script.setUser(u);
@@ -101,7 +110,19 @@ public class ScriptController {
 		
 		script.setCreationData(dateFormat.format(date));
 		
+		History h = new History();
+		h.setComment("Creation of the script");
+		h.setContent(script.getContent());
+		h.setDate(dateFormat.format(date));
+		
+		historiesRepo.save(h);
+		
+		script.addHistory(h);
+		
 		scriptsRepo.save(script);
+		
+		h.setScript(script);
+		historiesRepo.save(h);
 			
 		return new RedirectView("/users/index");
 		
@@ -148,7 +169,7 @@ public class ScriptController {
 	}
 	
 	@PostMapping("open/saveChanges")
-	public RedirectView saveChanges(@ModelAttribute("script") Script script) {
+	public RedirectView saveChanges(@ModelAttribute("script") Script script, @RequestParam("comment") String comment) {
 		
 		
 		
@@ -163,13 +184,61 @@ public class ScriptController {
 			
 			script2.setContent(script.getContent());
 			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			
+			History h = new History();
+			h.setComment(comment);
+			h.setContent(script2.getContent());
+			h.setDate(dateFormat.format(date));
+			
+			historiesRepo.save(h);
+			
 			scriptsRepo.save(script2);
+			
+			h.setScript(script2);
+			
+			historiesRepo.save(h);
 			
 			
 			
 		}
 			
 		return new RedirectView("/users/index");
+		
+		
+		
+	}
+	
+	@RequestMapping("histories/{id}")
+	public String showHistories(Model model,@PathVariable("id") String id) {
+		
+		
+		List<History> h = historiesRepo.findByScript_id(Integer.parseInt(id));
+		
+		System.out.println(h);
+		
+		model.addAttribute("histories",h);
+		
+		
+		return "script/histories";
+		
+		
+		
+	}
+	  
+
+	@RequestMapping("history/open/{id}")
+	public String showHistory(Model model,@PathVariable("id") String id) {
+		
+		
+		History h = historiesRepo.findById(Integer.parseInt(id));
+		
+		
+		model.addAttribute("h",h);
+		
+		
+		return "script/history";
 		
 		
 		
