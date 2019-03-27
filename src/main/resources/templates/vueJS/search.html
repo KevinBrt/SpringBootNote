@@ -1,0 +1,30 @@
+{{>vueJS/header}}
+<template>
+  <v-container
+    id="input-usage"
+    grid-list-xl
+    fluid
+  >
+    <v-layout wrap>
+      <v-flex xs12>
+        <v-text-field
+         @input="test"
+            v-model="search"
+            :counter="10"
+            label="Search"
+          ></v-text-field>
+      </v-flex>
+    </v-layout>
+  </v-container>
+</template>
+
+<div>
+	<v-list two-line>
+		<template v-for="item in result">
+			<v-list-tile-content>
+				<v-list-tile-title v-html="item.text"></v-list-tile-title>
+			</v-list-tile-content>
+		</template>
+	</v-list>
+</div>
+{{>vueJS/footer}}

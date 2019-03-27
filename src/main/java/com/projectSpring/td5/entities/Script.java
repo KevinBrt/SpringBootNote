@@ -3,6 +3,7 @@ package com.projectSpring.td5.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class Script {
 	@ManyToOne
 	private User user;
 	
-	@OneToMany
+	@OneToMany(mappedBy="script", cascade=CascadeType.ALL)
 	private List<History> history;
 	
 	@ManyToOne
@@ -105,6 +106,12 @@ public class Script {
 	
 	public void addHistory(History h){
 		history.add(h);
+	}
+	
+	public void removeHistories() {
+		for(History h: history) {
+			history.remove(h);
+		}
 	}
 	
 	

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.projectSpring.td5.Recherche;
 import com.projectSpring.td5.entities.Categorie;
 import com.projectSpring.td5.entities.History;
 import com.projectSpring.td5.entities.Language;
@@ -30,7 +31,10 @@ import com.projectSpring.td5.repositories.CategoriesRepository;
 import com.projectSpring.td5.repositories.HistoriesRepository;
 import com.projectSpring.td5.repositories.LanguagesRepository;
 import com.projectSpring.td5.repositories.ScriptsRepository;
-import com.projectSpring.td5.repositories.UsersRepository;
+
+
+import io.github.jeemv.springboot.vuejs.VueJS;
+import io.github.jeemv.springboot.vuejs.utilities.Http;
 
 @Controller
 @RequestMapping("/users/script/")
@@ -47,6 +51,9 @@ public class ScriptController {
 	
 	@Autowired
 	private HistoriesRepository historiesRepo;
+	
+	@Autowired
+	private VueJS vue;
 	
 	@RequestMapping("createe")
 	@ResponseBody
@@ -80,7 +87,7 @@ public class ScriptController {
 		return script + " ajoutée dans la bdd";
 	}
 	
-	@RequestMapping("create")
+	@GetMapping("create")
 	public String create(ModelMap model, HttpSession session) {
 		
 		model.addAttribute("languages", languagesRepo.findAll());
@@ -137,6 +144,7 @@ public class ScriptController {
 		
 		if(s.isPresent()) {
 			Script script = s.get();
+			
 			
 			scriptsRepo.delete(script);
 		}
@@ -240,6 +248,33 @@ public class ScriptController {
 		
 		return "script/history";
 		
+		
+		
+	}
+	
+	@GetMapping("search")
+	public String search(Model model) {
+		
+		
+		model.addAttribute("vue", vue);
+		Recherche r = new Recherche();
+		
+		
+		vue.addData("search", "");
+		vue.addDataRaw("result", "[{text:'Name'},{text:'Domain'},{text:'TESSST'}]");
+		
+		vue.addMethod("test", "var self=this;"+Http.post(
+				"/rest/scripts/search",
+				(Object)"{recherche:self.search}",
+				"console.log(response.data[0])"
+				)
+		);
+		
+		
+		
+			
+		
+		return "vueJS/search";
 		
 		
 	}

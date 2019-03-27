@@ -35,17 +35,14 @@ public class UserController {
 	@RequestMapping("connexion")
 	public String connect(Model model, HttpSession session) {
 		
-		if(isConnected(session) == false) {
 			model.addAttribute("user", new User());
 			return "user/connect";
-		}else {
-			return "user/index";
-		}
 		
 	}
 	
 	public boolean isConnected(HttpSession session) {
-		if( session.getAttribute("user") == null) {
+		User u = (User)session.getAttribute("user");
+		if( u == null) {
 			return false;
 		}else {
 			return true;
@@ -54,11 +51,12 @@ public class UserController {
 	
 	
 	
+	
 	@PostMapping("connexion")
 	public RedirectView testConnexion(@ModelAttribute("user") User u, HttpSession session) {
 		User user = usersRepo.findByLogin(u.getLogin());
 		
-		if(user != null) {
+		if(user != null && u.getPassword().equals(user.getPassword())) {
 			System.out.println("ACCESS AUTORISE");
 			session.setAttribute("user", user);
 			session.setMaxInactiveInterval(-1);
