@@ -266,12 +266,12 @@ public class ScriptController {
 		vue.addMethod("test", "var self=this;"+Http.post(
 				"/rest/scripts/search",
 				(Object)"{recherche:self.search}",
-				"console.log(response.data[0])"
+				" response.data.forEach(function(element) {console.log(element.title);}); "
 				)
 		);
 		
 		
-		
+		  
 			
 		
 		return "vueJS/search";
