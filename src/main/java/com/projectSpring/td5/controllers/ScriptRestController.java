@@ -1,5 +1,6 @@
 package com.projectSpring.td5.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +27,17 @@ public class ScriptRestController {
 	@ResponseBody
 	@PostMapping("search")
 	public List<Script> get(@RequestBody Recherche search){
-		System.out.println("search : " + search.getRecherche());
-
-		return repo.findAll();
+		
+		List<Script> all = repo.findAll();
+		List<Script> retour = new ArrayList<Script>();
+		
+		for(Script s: all) { // Search by Title
+			if(s.getTitle().toUpperCase().contains(search.getRecherche().toUpperCase())) {
+				retour.add(s);
+			}
+		}
+			
+		return retour;
 		
 	}
 	

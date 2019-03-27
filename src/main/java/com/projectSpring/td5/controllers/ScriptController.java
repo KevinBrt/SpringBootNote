@@ -251,7 +251,7 @@ public class ScriptController {
 		
 		
 	}
-	
+	 
 	@GetMapping("search")
 	public String search(Model model) {
 		
@@ -261,12 +261,12 @@ public class ScriptController {
 		
 		
 		vue.addData("search", "");
-		vue.addDataRaw("result", "[{text:'Name'},{text:'Domain'},{text:'TESSST'}]");
+		vue.addDataRaw("result", "[]");
 		
 		vue.addMethod("test", "var self=this;"+Http.post(
 				"/rest/scripts/search",
 				(Object)"{recherche:self.search}",
-				" response.data.forEach(function(element) {console.log(element.title);}); "
+				" self.result = []; response.data.forEach(function(element) {self.result.push({title: element.title})}); "
 				)
 		);
 		
